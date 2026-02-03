@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Proposal</title>
+    <style>
+        :root {
+            --sky-blue: #e3f2fd;
+            --heart-red: #ff4d6d;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--sky-blue);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .caricature {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #d32f2f;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background-color: var(--heart-red);
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #9e9e9e;
+            color: white;
+            position: relative;
+        }
+
+        #success-msg {
+            display: none;
+        }
+
+        .heart-rain {
+            position: fixed;
+            top: -20px;
+            animation: fall 3s linear forwards;
+            z-index: 1000;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <div id="proposal-view">
+            <img src="proposal.jpg" alt="Babu proposing to Bubu" class="caricature">
+            <h1>Hey cute, will you be my valentine? 💖</h1>
+            <div class="btn-group">
+                <button id="yesBtn" onclick="showSuccess()">Yes</button>
+                <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
+            </div>
+        </div>
+
+        <div id="success-msg">
+            <img src="kiss.jpg" alt="Babu and Bubu kissing" class="caricature">
+            <h1 style="color: var(--heart-red);">Yay! I love you, Kittu! ❤️</h1>
+            <p>Ready for our next adventure? ✈️</p>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const proposalView = document.getElementById('proposal-view');
+        const successMsg = document.getElementById('success-msg');
+
+        function moveNoButton() {
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.zIndex = '999';
+        }
+
+        function showSuccess() {
+            proposalView.style.display = 'none';
+            successMsg.style.display = 'block';
+            document.body.style.backgroundColor = '#ffebf0';
+            setInterval(createHeart, 300);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-rain');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
